@@ -5,6 +5,7 @@ from datetime import date
 
 from carbon_intensity.api.client import CarbonIntensityClient
 from carbon_intensity.models import DateRange
+from carbon_intensity.processing.processor import GenerationProcessor
 
 def configure_logging() -> None:
     """Configure basic console logging for development."""
@@ -30,9 +31,15 @@ def main() -> None:
 
     logger.info("Retrieved %d generation periods.", len(periods))
 
-    if periods:
-        logger.info("First generation period: %s", periods[0])
-        logger.info("Last generation period: %s", periods[-1])
+    processor = GenerationProcessor()
+    processed_periods = processor.process(periods)
+
+    logger.info("Processed %d generation periods.", len(processed_periods))
+
+    if processed_periods:
+        logger.info("First processed period: %s", processed_periods[0])
+        logger.info("Sample daytime processed period: %s", processed_periods[20])
+        logger.info("Last processed period: %s", processed_periods[-1])
 
 if __name__ == "__main__":
     main()
