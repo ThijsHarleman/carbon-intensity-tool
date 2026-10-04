@@ -1,9 +1,11 @@
 """Application entry point for the Carbon Intensity tool."""
 
 import logging
-from datetime import date
+from datetime import date, datetime, timezone
+from pathlib import Path
 
 from carbon_intensity.api.client import CarbonIntensityClient
+from carbon_intensity.output.csv_writer import CsvReportWriter
 from carbon_intensity.models import DateRange
 from carbon_intensity.processing.processor import GenerationProcessor
 
@@ -40,6 +42,16 @@ def main() -> None:
         logger.info("First processed period: %s", processed_periods[0])
         logger.info("Sample daytime processed period: %s", processed_periods[20])
         logger.info("Last processed period: %s", processed_periods[-1])
+
+    writer = CsvReportWriter()
+
+    writer.write(
+        periods=processed_periods,
+        retrieved_at=datetime.now(timezone.utc),
+        output_path=Path("output/generation_report.csv"),
+    )
+
+    logger.info("CSV report written to output/generation_report.csv")
 
 if __name__ == "__main__":
     main()
