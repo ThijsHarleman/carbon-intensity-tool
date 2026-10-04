@@ -5,16 +5,10 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 
 from carbon_intensity.api.client import CarbonIntensityClient
-from carbon_intensity.output.csv_writer import CsvReportWriter
+from carbon_intensity.logging_config import configure_logging
 from carbon_intensity.models import DateRange
+from carbon_intensity.output.csv_writer import CsvReportWriter
 from carbon_intensity.processing.processor import GenerationProcessor
-
-def configure_logging() -> None:
-    """Configure basic console logging for development."""
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s %(levelname)s %(name)s: %(message)s",
-    )
 
 def main() -> None:
     """Start the application."""
