@@ -47,11 +47,6 @@ def _run_application(date_range: DateRange) -> None:
 
     logger.info("Processed %d generation periods.", len(processed_periods))
 
-    if processed_periods:
-        logger.info("First processed period: %s", processed_periods[0])
-        logger.info("Sample daytime processed period: %s", processed_periods[20])
-        logger.info("Last processed period: %s", processed_periods[-1])
-
     writer = CsvReportWriter()
 
     writer.write(
