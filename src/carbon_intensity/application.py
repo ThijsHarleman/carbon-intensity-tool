@@ -47,15 +47,23 @@ def _run_application(date_range: DateRange) -> None:
 
     logger.info("Processed %d generation periods.", len(processed_periods))
 
+    retrieved_at = datetime.now(timezone.utc)
+    output_path=_build_output_path(retrieved_at)
+
     writer = CsvReportWriter()
 
     writer.write(
         periods=processed_periods,
-        retrieved_at=datetime.now(timezone.utc),
-        output_path=Path("output/generation_report.csv"),
+        retrieved_at=retrieved_at,
+        output_path=output_path,
     )
 
-    logger.info("CSV report written to output/generation_report.csv")
+    logger.info("CSV report written to %s", output_path)
+
+def _build_output_path(retrieved_at: datetime) -> Path:
+    """Build a unique output path using the retrieval timestamp."""
+    timestamp = retrieved_at.strftime("%Y%m%dT%H%M%SZ")
+    return Path("output") / f"generation_report_{timestamp}.csv"
 
 if __name__ == "__main__":
     main()

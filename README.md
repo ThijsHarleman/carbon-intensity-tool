@@ -21,7 +21,7 @@ Or, after installation:
 Dates must use YYYY-MM-DD format, and the end date must not be earlier than the start date.
 
 The generated report is written to:
-    output/generation_report.csv
+    output/generation_report_<timestamp>.csv
 
 Logs are written to:
     logs/carbon_intensity.log
