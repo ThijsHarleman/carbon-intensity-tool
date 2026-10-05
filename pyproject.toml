@@ -16,5 +16,8 @@ test = [
     "pytest>=8.0,<9.0",
 ]
 
+[project.scripts]
+carbon-intensity = "carbon_intensity.application:main"
+
 [tool.setuptools.packages.find]
 where = ["src"]
