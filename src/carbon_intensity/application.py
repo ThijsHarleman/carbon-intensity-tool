@@ -1,11 +1,12 @@
 """Application entry point for the Carbon Intensity tool."""
 
 import logging
-from datetime import date, datetime, timezone
+from datetime import datetime, timezone
 from pathlib import Path
 
 from carbon_intensity.api.client import CarbonIntensityClient
 from carbon_intensity.api.exceptions import CarbonIntensityApiError
+from carbon_intensity.cli import parse_args
 from carbon_intensity.logging_config import configure_logging
 from carbon_intensity.models import DateRange
 from carbon_intensity.output.csv_writer import CsvReportWriter
@@ -21,17 +22,13 @@ def main() -> None:
     logger.info("Carbon Intensity tool started.")
 
     try:
-        _run_application()
+        date_range = parse_args()
+        _run_application(date_range)
     except (CarbonIntensityApiError, CsvReportError) as exc:
         logger.error("Application failed: %s", exc)
 
-def _run_application() -> None:
+def _run_application(date_range: DateRange) -> None:
     """Run the main application workflow."""
-    date_range = DateRange(
-        start=date(2026, 3, 1),
-        end=date(2026, 3, 1),
-    )
-
     client = CarbonIntensityClient()
     periods = client.get_generation_mix(date_range)
 

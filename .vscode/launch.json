@@ -1,0 +1,18 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "name": "Run Carbon Intensity Tool",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "carbon_intensity.application",
+            "args": [
+                "--start-date",
+                "2026-03-01",
+                "--end-date",
+                "2026-03-14"
+            ],
+            "console": "integratedTerminal"
+        }
+    ]
+}
